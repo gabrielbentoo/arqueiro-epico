@@ -15,7 +15,7 @@ class PlayerArrow {
     remove(index) {
         this.isRemoved = true;
         Matter.World.remove(world, this.body);
-        delete playerArrows[index];
+        delete playerArrow[index];
     }
     shoot(archerAngle) {
         this.velocity = p5.Vector.fromAngle(archerAngle + PI /2);
@@ -32,7 +32,7 @@ class PlayerArrow {
             tmpAngle = this.archerAngle + PI /2;
         }
         else {
-            tmpAngle = Math.atn(this.body.velocity.y / this.body.velocity.x);
+            tmpAngle = Math.atan(this.body.velocity.y / this.body.velocity.x);
         }
         Matter.Body.setAngle(this.body, tmpAngle);
         let pos = this.body.position;
