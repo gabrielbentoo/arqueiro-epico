@@ -1,7 +1,6 @@
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
-const Body = Matter.Body;
 const Constraint = Matter.Constraint;
 let engine;
 let world;
@@ -15,6 +14,7 @@ let board2;
 let playerArrow = [];
 let numberOfArrows = 10;
 let score = 0;
+let gameState = "play";
 
 function preload() {
     backgroundImg = loadImage("./assets/background.png");
@@ -48,15 +48,19 @@ function draw() {
         if(playerArrow[i] !== undefined) {
             playerArrow[i].display();
 
-            let board1Collision = Matter.SAT.collides(board1.body, playerArrow[i].body);
-            let board2Collision = Matter.SAT.collides(board2.body, playerArrow[i].body);
+            let arrowPos = playerArrow[i].body.position;
+            let board1Pos = board1.body.position;
+            let board2Pos = board2.body.position;
+            let d1 = dist(arrowPos.x, arrowPos.y, board1Pos.x, board1Pos.y);
+            let d2 = dist(arrowPos.x, arrowPos.y, board2Pos.x, board2Pos.y);
 
-            if(board1Collision.collided || board2Collision.collided) {
+            if(d1 < 120 || d2 < 120) {
                 score += 5;
+                playerArrow[i].remove(i);
             }
 
-            let posX = playerArrow[i].body.position.x;
-            let posY = playerArrow[i].body.position.y;
+            let posX = arrowPos.x;
+            let posY = arrowPos.y;
 
             if(posX > width || posY > height) {
                 if(!playerArrow[i].isRemoved) {
@@ -76,8 +80,13 @@ function draw() {
     textSize(30);
     text("Flechas restantes: " + numberOfArrows, 200, 100);
     text("Pontuacao: " + score, width -200, 100);
-    if(numberOfArrows == 0) {
+    if(numberOfArrows == 0 && gameState === "play") {
+        gameState = "end";
         gameOver();
+
+    }
+    if(gameState === "end") {
+        return; 
     }
     
 }

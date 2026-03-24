@@ -14,15 +14,15 @@ class PlayerArcher {
     }
     display() {
         let pos = this.body.position;
-        let angle = this.body.position;
-        if(keyIsDown(DOWN_ARROW) && angle < -1.2) {
-            angle += 0.01;
+        let angle = this.body.angle;
+        if(keyIsDown(DOWN_ARROW) && angle < -0.8) {
+            angle += 0.02;
             Matter.Body.setAngle(this.body, angle);
 
         }
-        if(keyIsDown(UP_ARROW) && angle > -1.6) {
-            angle -= 0.01;
-            Matter.body.setAngle(this.body, angle);
+        if(keyIsDown(UP_ARROW) && angle > -2.2) {
+            angle -= 0.02;
+            Matter.Body.setAngle(this.body, angle);
 
         }
         push();

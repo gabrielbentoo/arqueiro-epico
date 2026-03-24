@@ -10,6 +10,7 @@ class PlayerArrow {
         this.image = loadImage("./assets/arrow.png");
         this.archerAngle = archerAngle;
         this.velocity = p5.Vector.fromAngle(archerAngle);
+        this.trajectory = [];
         World.add(world, this.body);
     }
     remove(index) {
@@ -19,7 +20,7 @@ class PlayerArrow {
     }
     shoot(archerAngle) {
         this.velocity = p5.Vector.fromAngle(archerAngle + PI /2);
-        this.velocity.mult(55);
+        this.velocity.mult(90);
         Matter.Body.setVelocity(this.body, {
             x: this.velocity.x,
             y: this.velocity.y
@@ -43,7 +44,7 @@ class PlayerArrow {
         imageMode(CENTER);
         image(this.image, 0, 0, this.w, this.h);
         pop();
-        if(this.body.velocity.x > 0 && this.body.position > 400) {
+        if(this.body.velocity.x > 0 && this.body.position.x > 400) {
             let position = [this.body.position.x, this.body.position.y];
             this.trajectory.push(position);
         }
