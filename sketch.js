@@ -118,16 +118,37 @@ function gameOver() {
     swal(
         {
             title: "Fim de jogo!", 
-            text: "Obrigado por jogar.",
-            imageUrl: "https://raw.githubusercontent.com/vishalgaddam873/PiratesInvision/main/assets/board.png",
-            imageSize: "150x150",
-            confirmButtonText: "Jogar novamente"
-        },
-        function (isConfirm) {
-            if(isConfirm) {
-                location.reload();
+            text: "Obrigado por jogar. Sua pontuacao:" + score,
+            icon: "info",
+            content: {
+                element: "img",
+            attributes: {
+                src:"https://raw.githubusercontent.com/vishalgaddam873/PiratesInvision/main/assets/board.png",
+                width: 150
             }
+            }, 
+           
+            button: "Jogar novamente"
         }
-    )
+        
+    ).them(() => {
+        resetGame();
+    
+    })
+}
+
+function resetGame() {
+    playerArrow = [];
+    numberOfArrows = 10;
+    score = 0;
+    engine = Engine.create();
+    world = engine.world;
+    world.gravity.y = 0.3;
+    playerBase = new PlayerBase(300, 500, 180, 150);
+    player = new Player(285, playerBase.body.position.y -153, 50, 180);
+    playerArcher = new PlayerArcher(340, playerBase.body.position.y -180, 120, 120);
+    board1 = new Board(width -300, 330, 50, 200 );
+    board2 = new Board(width -550, height -300, 50, 200);
+    gameState = "play";
 }
 
